@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Blog</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a> | <a href="/about">About</a> | <a href="/contact">Contact</a> | <a href="/blog">Blog</a>
+    </nav>
+
+    <h1>Latest Blog Posts</h1>
+    
+    <div id="blog-container">
+        <p>Loading posts...</p>
+    </div>
+
+    <script>
+        async function loadPosts() {
+            try {
+                
+                const response = await fetch('/api/posts');
+                const posts = await response.json();
+                
+                const container = document.getElementById('blog-container');
+                
+                
+                container.innerHTML = posts.map(post => `
+                    <div class="post" style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+                        <h2 style="color: #333;">${post.title}</h2>
+                        <p>${post.content}</p>
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                console.error("Error loading posts:", error);
+                document.getElementById('blog-container').innerHTML = "<p>Failed to load posts.</p>";
+            }
+        }
+        
+        
+        loadPosts();
+    </script>
+</body>
+</html>

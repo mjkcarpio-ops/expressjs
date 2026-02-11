@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const posts = require('./posts.json'); 
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,6 +19,16 @@ app.get('/about', (req, res) => {
 
 app.get('/contact', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'contact.html'));
+});
+
+
+app.get('/blog', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'blog.html'));
+});
+
+
+app.get('/api/posts', (req, res) => {
+    res.json(posts);
 });
 
 // Start the server
